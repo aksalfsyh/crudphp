@@ -1,4 +1,11 @@
 <?php
+
+session_start();
+if(!isset($_SESSION['session_username'])){
+    header("location:login.php");
+    exit();
+}
+
 $host   = "localhost";
 $user   = "root";
 $pass   = "";
@@ -25,7 +32,7 @@ if (isset($_GET['op'])) {
 
 if($op == 'delete' ){
     $id     =$_GET['id'];
-    $sql1   = "delete from mahasiswa where id = '$id' ";
+    $sql1   = "delete from mahasiswa2 where id = '$id' ";
     $q1     = mysqli_query($koneksi, $sql1);
     if($q1){
         $sukses = "Berhasil delete data";
@@ -36,7 +43,7 @@ if($op == 'delete' ){
 
 if ($op == 'edit') {
     $id     = $_GET['id'];
-    $sql1   = "select * from mahasiswa where id = '$id'";
+    $sql1   = "select * from mahasiswa2 where id = '$id'";
     $q1     = mysqli_query($koneksi, $sql1);
     $r1     = mysqli_fetch_array($q1);
     $nim    = $r1['nim'];
@@ -57,7 +64,7 @@ if (isset($_POST['simpan'])) { //untuk create
 
     if ($nim && $nama && $alamat && $fakultas) {
         if ($op == 'edit') {//update
-            $sql1   = "update mahasiswa set nim = '$nim',nama= '$nama', alamat= '$alamat', fakultas= '$fakultas' where id = '$id' ";
+            $sql1   = "update mahasiswa2 set nim = '$nim',nama= '$nama', alamat= '$alamat', fakultas= '$fakultas' where id = '$id' ";
             $q1     = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses = "Data berhasil diupdate";
@@ -65,7 +72,7 @@ if (isset($_POST['simpan'])) { //untuk create
                 $error  = "Data gagal di update";
             }
         } else {//insert
-            $sql1   = "insert into mahasiswa(nim,nama,alamat,fakultas) values ('$nim','$nama','$alamat','$fakultas')";
+            $sql1   = "insert into mahasiswa2(nim,nama,alamat,fakultas) values ('$nim','$nama','$alamat','$fakultas')";
             $q1     = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses = "Berhasil memasukan data baru";
@@ -89,7 +96,7 @@ if (isset($_POST['simpan'])) { //untuk create
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Mahasiswa</title>
+    <title>Data mahasiswa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .mx-auto {
@@ -177,14 +184,15 @@ if (isset($_POST['simpan'])) { //untuk create
                         <div class="col-sm-10">
                             <select class="form-control" name="fakultas" id="fakultas">
                                 <option value="">-Pilih Fakultas-</option>
-                                <option value="saintek" <?php if ($fakultas == "saintek") echo "selected" ?>>Saintek</option>
-                                <option value="soshum" <?php if ($fakultas == "soshum") echo "selected" ?>>Soshum</option>
+                                <option value="Saintek" <?php if ($fakultas == "Saintek") echo "selected" ?>>Saintek</option>
+                                <option value="Soshum" <?php if ($fakultas == "Soshum") echo "selected" ?>>Soshum</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="coll-12">
                         <input type="submit" name="simpan" value="Simpan data" class="btn btn-primary">
+                        <a class="btn btn-dark" href="logout.php" role="button">Logout</a>
                     </div>
 
                 </form>
@@ -195,13 +203,13 @@ if (isset($_POST['simpan'])) { //untuk create
         <!-- untuk mengeluarkan data -->
         <div class="card">
             <div class="card-header text-white bg-secondary">
-                Data Mahasiswa
+                Data mahasiswa
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">No</th>
                             <th scope="col">NIM</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Alamat</th>
@@ -211,7 +219,7 @@ if (isset($_POST['simpan'])) { //untuk create
 
                     <tbody>
                         <?php
-                        $sql2   = "select * from mahasiswa order by id desc";
+                        $sql2   = "select * from mahasiswa2 order by id desc";
                         $q2     = mysqli_query($koneksi, $sql2);
                         $urut = 1;
                         while ($r2 = mysqli_fetch_array($q2)) {
@@ -255,3 +263,4 @@ if (isset($_POST['simpan'])) { //untuk create
 </body>
 
 </html>
+

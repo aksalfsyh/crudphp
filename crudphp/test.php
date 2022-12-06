@@ -22,7 +22,7 @@ if (isset($_GET['op'])) {
 }
 if($op == 'delete'){
     $id         = $_GET['id'];
-    $sql1       = "delete from mahasiswa where id = '$id'";
+    $sql1       = "delete from mahasiswa2 where id = '$id'";
     $q1         = mysqli_query($koneksi,$sql1);
     if($q1){
         $sukses = "Berhasil hapus data";
@@ -32,7 +32,7 @@ if($op == 'delete'){
 }
 if ($op == 'edit') {
     $id         = $_GET['id'];
-    $sql1       = "select * from mahasiswa where id = '$id'";
+    $sql1       = "select * from mahasiswa2 where id = '$id'";
     $q1         = mysqli_query($koneksi, $sql1);
     $r1         = mysqli_fetch_array($q1);
     $nim        = $r1['nim'];
@@ -52,7 +52,7 @@ if (isset($_POST['simpan'])) { //untuk create
 
     if ($nim && $nama && $alamat && $fakultas) {
         if ($op == 'edit') { //untuk update
-            $sql1       = "update mahasiswa set nim = '$nim',nama='$nama',alamat = '$alamat',fakultas='$fakultas' where id = '$id'";
+            $sql1       = "update mahasiswa2 set nim = '$nim',nama='$nama',alamat = '$alamat',fakultas='$fakultas' where id = '$id'";
             $q1         = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses = "Data berhasil diupdate";
@@ -60,7 +60,7 @@ if (isset($_POST['simpan'])) { //untuk create
                 $error  = "Data gagal diupdate";
             }
         } else { //untuk insert
-            $sql1   = "insert into mahasiswa(nim,nama,alamat,fakultas) values ('$nim','$nama','$alamat','$fakultas')";
+            $sql1   = "insert into mahasiswa2(nim,nama,alamat,fakultas) values ('$nim','$nama','$alamat','$fakultas')";
             $q1     = mysqli_query($koneksi, $sql1);
             if ($q1) {
                 $sukses     = "Berhasil memasukkan data baru";
@@ -80,7 +80,7 @@ if (isset($_POST['simpan'])) { //untuk create
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Mahasiswa</title>
+    <title>Data mahasiswa2</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <style>
         .mx-auto {
@@ -160,7 +160,7 @@ if (isset($_POST['simpan'])) { //untuk create
         <!-- untuk mengeluarkan data -->
         <div class="card">
             <div class="card-header text-white bg-secondary">
-                Data Mahasiswa
+                Data mahasiswa2
             </div>
             <div class="card-body">
                 <table class="table">
@@ -176,7 +176,7 @@ if (isset($_POST['simpan'])) { //untuk create
                     </thead>
                     <tbody>
                         <?php
-                        $sql2   = "select * from mahasiswa order by id desc";
+                        $sql2   = "select * from mahasiswa2 order by id desc";
                         $q2     = mysqli_query($koneksi, $sql2);
                         $urut   = 1;
                         while ($r2 = mysqli_fetch_array($q2)) {
